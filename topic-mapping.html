@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    RED.nodes.registerType('mats in',{
+    RED.nodes.registerType('topic-mapping',{
         category: 'function',
         color: '#a6bbcf',
         defaults: {
@@ -13,9 +13,10 @@
         outputLabels: "MQTT output",
         icon: "arrow.in.png",
         label: function() {
-            return this.name||"mats in";
+            return this.name||"topic-mapping";
         }
     });
+
     RED.nodes.registerType('mats out',{
         category: 'function',
         color: '#a6bbcf',
@@ -33,7 +34,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="mats in">
+<script type="text/x-red" data-template-name="topic-mapping">
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
@@ -48,8 +49,8 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="mats in">
-    <p>HTML mats.html</p>
+<script type="text/x-red" data-help-name="topic-mapping">
+    <p>Maps input topic into output topic based on a mapping file.</p>
 </script>
 
 

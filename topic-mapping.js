@@ -2,7 +2,7 @@ module.exports = function(RED) {
 
     var mqttregex = require('mqtt-regex');
 
-    function MatsNodeIn(config) {
+    function TopicMapping(config) {
         RED.nodes.createNode(this,config);
         this.pattern = config.pattern;
         this.mapfilename = config.mapfile;
@@ -21,7 +21,7 @@ module.exports = function(RED) {
             node.send(msg);
         });
     }
-    RED.nodes.registerType("mats in",MatsNodeIn);
+    RED.nodes.registerType("topic-mapping",TopicMapping);
 
     function MatsNodeOut(config) {
         RED.nodes.createNode(this,config);
