@@ -1,0 +1,11 @@
+{
+  "type": {
+    "sensor": "SENSOR",
+    "action": "ACTION",
+    "event": "EVENT"
+  },
+  "unitid": {
+     "teho1": "garage/labb",
+     "teho2": "garage/dorr"
+  }
+}

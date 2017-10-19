@@ -1,0 +1,22 @@
+{
+  "name": "node-red-contrib-mats",
+  "version": "0.0.11",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "mqtt-regex": "~1.0.5",
+    "debug": "~2.6.9"
+  },
+  "node-red" : {
+    "nodes": {
+      "mats": "mats.js"
+    }
+  },
+  "main": "mats.js",
+  "devDependencies": {},
+  "author": "Mats Ekberg",
+  "license": "MIT",
+  "description": "My first node-red node"
+}

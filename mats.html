@@ -1,0 +1,70 @@
+<script type="text/javascript">
+    RED.nodes.registerType('mats in',{
+        category: 'function',
+        color: '#a6bbcf',
+        defaults: {
+            name: {value:""},
+            mapfile: {value:"./mapping.json"},
+            pattern: {value:"+type/+id/#entity"}
+        },
+        inputs:1,
+        outputs:1,
+        inputLabels: "MQTT input",
+        outputLabels: "MQTT output",
+        icon: "arrow.in.png",
+        label: function() {
+            return this.name||"mats in";
+        }
+    });
+    RED.nodes.registerType('mats out',{
+        category: 'function',
+        color: '#a6bbcf',
+        align: 'right',
+        defaults: {
+            name: {value:""},
+            test: {value:"Added text out"}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "arrow.in.png",
+        label: function() {
+            return this.name||"mats out";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="mats in">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-pattern"><i class="icon-tag"></i> Pattern</label>
+        <input type="text" id="node-input-pattern" placeholder="Pattern">
+    </div>
+    <div class="form-row">
+        <label for="node-input-mapfile"><i class="icon-tag"></i> Mapfile</label>
+        <input type="text" id="node-input-mapfile" placeholder="Mapfile">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="mats in">
+    <p>HTML mats.html</p>
+</script>
+
+
+
+<script type="text/x-red" data-template-name="mats out">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-test"><i class="icon-tag"></i> Test</label>
+        <input type="text" id="node-input-test" placeholder="Test">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="mats out">
+    <p>HTML out mats.html</p>
+</script>
