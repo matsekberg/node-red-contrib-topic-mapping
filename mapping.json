@@ -1,11 +1,27 @@
 {
-  "type": {
-    "sensor": "SENSOR",
-    "action": "ACTION",
-    "event": "EVENT"
+  "map1" : {
+    "type": {
+      "sensor": "SENSOR",
+      "action": "ACTION",
+      "event": "EVENT"
+    },
+    "unitid": {
+      "teho1": "garage/labb",
+      "teho2": "garage/dorr"
+    },
+    "entity": {
+      "inne/temp": "inne/TEMPERATURE",
+      "humid": "HUMIDITET"
+    }
   },
-  "unitid": {
-     "teho1": "garage/labb",
-     "teho2": "garage/dorr"
+  "map2": {
+    "type": {
+      "sensor": "Sensor",
+      "action": "Action",
+      "event": "Event"
+    },
+    "pass": {
+      "inne/temp": "innetemp"
+    }
   }
 }

@@ -5,12 +5,13 @@
         defaults: {
             name: {value:""},
             mapfile: {value:"./mapping.json"},
+            mapname: {value:"map1"},
             pattern: {value:"+type/+id/#entity"}
         },
         inputs:1,
-        outputs:1,
+        outputs:2,
         inputLabels: "MQTT input",
-        outputLabels: "MQTT output",
+        outputLabels: ["MQTT output", "flat"],
         icon: "arrow.in.png",
         label: function() {
             return this.name||"topic-mapping";
@@ -46,6 +47,10 @@
     <div class="form-row">
         <label for="node-input-mapfile"><i class="icon-tag"></i> Mapfile</label>
         <input type="text" id="node-input-mapfile" placeholder="Mapfile">
+    </div>
+    <div class="form-row">
+        <label for="node-input-mapname"><i class="icon-tag"></i> Mapname</label>
+        <input type="text" id="node-input-mapname" placeholder="Mapname">
     </div>
 </script>
 

@@ -2,20 +2,42 @@ module.exports = function(RED) {
 
     var mqttregex = require('mqtt-regex');
 
+    function findMapping(key, value, mapping) {
+        var ret = value;
+        //console.log("one: " + key);
+
+        var mapelem = mapping[key];
+        if (mapelem) {
+            //console.log("mapping found: " + JSON.stringify(mapelem));
+            //console.log("mapping this: " + value);
+            if (mapelem.hasOwnProperty(value)) {
+                ret = mapelem[value];
+                //console.log("  to this: " + ret);
+            }
+        } else {
+            //console.log("no mapping found");
+        }
+        //console.log(JSON.stringify(ret));
+        return ret;
+    }
+
     function TopicMapping(config) {
         RED.nodes.createNode(this,config);
         var node = this;
         this.pattern = config.pattern;
+        this.mapname = config.mapname;
 
         // loading mapping file
-        var mapfilename = config.mapfile;
-        node.debug("mapfilename: " + mapfilename);
+        this.mapfilename = config.mapfile;
+        node.debug("mapfilename: " + this.mapfilename);
 
         // load the mapping
-        this.mapping = require(mapfilename);
+        this.mapping = require(this.mapfilename);
+        this.mapping = this.mapping[this.mapname];
         node.debug("mapping: " + JSON.stringify(this.mapping));
 
         node.on('input', function(msg) {
+            var topic_out = [];
             this.status({fill:"red",shape:"ring",text:msg.topic + " processed"});
 
             node.debug("topic: " + msg.topic);
@@ -24,32 +46,31 @@ module.exports = function(RED) {
 
             // parse the incoming topic
             var topic_items = topic_parser(msg.topic);
-            node.debug("topic items: " + JSON.stringify(topic_items));
+            node.debug("topic_items: " + JSON.stringify(topic_items));
 
             for (var key in topic_items) {
-                if (topic_items.hasOwnProperty(key)) {
-                    if (Array.isArray(topic_items[key])) {
-                        // multiple topic elements
-                        node.debug("many: " + key);
-                    } else {
-                        // single topic element
-                        node.debug("one: " + key);
-
-                        var mapelem = this.mapping[key];
-                        node.debug("mapping found: " + JSON.stringify(mapelem));
-
-                        var newelem = mapelem[topic_items[key]];
-                        node.debug("new elem: " + JSON.stringify(newelem));
-
-
-                    }
+                var topic_item = topic_items[key];
+                if (Array.isArray(topic_item)) {
+                    // multiple topic elements
+                    topic_item = topic_item.join("/");
                 }
-                // key: the name of the object key
-                // index: the ordinal position of the key within the object
+                // single topic element
+                var newtop = findMapping(key, topic_item, this.mapping);
+                topic_out.push(newtop);
+                node.debug(key + ": " + topic_item + " --> " + newtop);
             };
-            msg.items = topic_items;
-            msg.mapping = mapping;
-            node.send(msg);
+            //msg.items = topic_items;
+            msg.mapname = this.mapname;
+            msg.mapfile = this.mapfilename;
+            var orig_topic = msg.topic;
+            msg.topic = topic_out.join("/");
+            var flat = {
+                "topic": orig_topic,
+                "varname": msg.topic.replace(/\//g, "_").toLowerCase(),
+                "payload": msg.payload,
+                "ts": new Date().getTime()
+            };
+            node.send([msg,flat]);
         });
     }
     RED.nodes.registerType("topic-mapping",TopicMapping);
