@@ -29,12 +29,19 @@ module.exports = function(RED) {
 
         // loading mapping file
         this.mapfilename = config.mapfile;
-        node.debug("mapfilename: " + this.mapfilename);
+        if (!this.mapfilename ) {
+            node.error("Missing mapfile in config");
+        }
 
         // load the mapping
         this.mapping = require(this.mapfilename);
+        if (!this.mapping ) {
+            node.error("Cannot load mapfile " + this.mapfilename);
+        }
+        if (!this.mapname ) {
+            node.error("Missing mapname in config");
+        }
         this.mapping = this.mapping[this.mapname];
-        node.debug("mapping: " + JSON.stringify(this.mapping));
 
         node.on('input', function(msg) {
             var topic_out = [];
